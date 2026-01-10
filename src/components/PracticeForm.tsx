@@ -96,33 +96,31 @@ export default function PracticeForm({ onSuccess }: PracticeFormProps) {
           </div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="min-w-0">
-            <label className="block text-sm font-medium text-accent mb-1">
-              Date
-            </label>
-            <input
-              type="date"
-              value={formData.practice_date}
-              onChange={e => setFormData(prev => ({ ...prev, practice_date: e.target.value }))}
-              className="w-full min-w-0 px-3 py-2 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-              required
-            />
-          </div>
+        <div>
+          <label className="block text-sm font-medium text-accent mb-1">
+            Date
+          </label>
+          <input
+            type="date"
+            value={formData.practice_date}
+            onChange={e => setFormData(prev => ({ ...prev, practice_date: e.target.value }))}
+            className="w-full px-3 py-2 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+            required
+          />
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium text-accent mb-1">
-              Duration (minutes)
-            </label>
-            <input
-              type="number"
-              min="1"
-              value={formData.duration_minutes}
-              onChange={e => setFormData(prev => ({ ...prev, duration_minutes: parseInt(e.target.value) || 0 }))}
-              className="w-full px-3 py-2 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-              required
-            />
-          </div>
+        <div>
+          <label className="block text-sm font-medium text-accent mb-1">
+            Duration (minutes)
+          </label>
+          <input
+            type="number"
+            min="1"
+            value={formData.duration_minutes}
+            onChange={e => setFormData(prev => ({ ...prev, duration_minutes: parseInt(e.target.value) || 0 }))}
+            className="w-full px-3 py-2 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+            required
+          />
         </div>
 
         <div>
