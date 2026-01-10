@@ -6,6 +6,7 @@ import AuthForm from '@/components/AuthForm'
 import PracticeForm from '@/components/PracticeForm'
 import PracticeList from '@/components/PracticeList'
 import Stats from '@/components/Stats'
+import FriendsActivity from '@/components/FriendsActivity'
 import type { User } from '@supabase/supabase-js'
 
 export default function Home() {
@@ -82,6 +83,8 @@ export default function Home() {
             <PracticeForm onSuccess={handlePracticeLogged} />
             <PracticeList refreshTrigger={refreshTrigger} />
           </div>
+
+          <FriendsActivity refreshTrigger={refreshTrigger} />
         </div>
       </div>
     </main>
