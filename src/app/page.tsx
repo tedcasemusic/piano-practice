@@ -52,7 +52,7 @@ export default function Home() {
     return (
       <main className="min-h-screen py-12 px-4">
         <div className="max-w-md mx-auto text-center mb-8">
-          <h1 className="text-3xl font-bold text-heading mb-2">Piano Practice Tracker</h1>
+          <h1 className="text-3xl font-bold text-heading mb-2">Piano Club Practice Log</h1>
           <p className="text-accent">Track your progress and reach your musical goals</p>
         </div>
         <AuthForm onSuccess={() => setRefreshTrigger(prev => prev + 1)} />
@@ -65,7 +65,7 @@ export default function Home() {
       <div className="max-w-4xl mx-auto">
         <header className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-heading">Piano Practice Tracker</h1>
+            <h1 className="text-2xl font-bold text-heading">Piano Club Practice Log</h1>
             <p className="text-accent">Welcome back!</p>
           </div>
           <button

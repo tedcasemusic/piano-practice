@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Piano Practice Tracker",
+  title: "Piano Club Practice Log",
   description: "Track and improve your piano practice",
 };
 
