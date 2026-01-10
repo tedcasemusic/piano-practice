@@ -73,50 +73,17 @@ export default function PracticeList({ refreshTrigger }: PracticeListProps) {
       <ul className="divide-y divide-secondary">
         {sessions.map(session => (
           <li key={session.id} className="px-6 py-4 hover:bg-background">
-            <div className="flex justify-between items-start">
-              <div className="flex-1">
-                <div className="flex items-center gap-3">
-                  <span className="font-medium text-heading">
-                    {formatDate(session.practice_date)}
-                  </span>
-                  <span className="text-primary font-semibold">
-                    {formatDuration(session.duration_minutes)}
-                  </span>
-                  {session.rating && (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary/20 text-heading">
-                      {session.rating}/5
-                    </span>
-                  )}
-                </div>
-
-                {session.pieces && session.pieces.length > 0 && (
-                  <div className="mt-1 flex flex-wrap gap-1">
-                    {session.pieces.map((piece, i) => (
-                      <span key={i} className="text-sm text-accent">
-                        {piece}{i < session.pieces!.length - 1 ? ',' : ''}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                {session.focus_areas && session.focus_areas.length > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-1">
-                    {session.focus_areas.map((area, i) => (
-                      <span
-                        key={i}
-                        className="inline-flex px-2 py-0.5 rounded-full text-xs bg-secondary text-accent"
-                      >
-                        {area}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                {session.notes && (
-                  <p className="mt-2 text-sm text-accent">{session.notes}</p>
-                )}
-              </div>
+            <div className="flex items-center gap-3">
+              <span className="font-medium text-heading">
+                {formatDate(session.practice_date)}
+              </span>
+              <span className="text-primary font-semibold">
+                {formatDuration(session.duration_minutes)}
+              </span>
             </div>
+            {session.notes && (
+              <p className="mt-2 text-sm text-accent">{session.notes}</p>
+            )}
           </li>
         ))}
       </ul>

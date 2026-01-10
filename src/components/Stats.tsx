@@ -7,7 +7,6 @@ interface StatsData {
   thisWeek: number
   thisMonth: number
   totalSessions: number
-  averageRating: number | null
 }
 
 interface StatsProps {
@@ -19,7 +18,6 @@ export default function Stats({ refreshTrigger }: StatsProps) {
     thisWeek: 0,
     thisMonth: 0,
     totalSessions: 0,
-    averageRating: null,
   })
   const [loading, setLoading] = useState(true)
 
@@ -40,7 +38,7 @@ export default function Stats({ refreshTrigger }: StatsProps) {
     // Get all sessions for calculations
     const { data: sessions } = await supabase
       .from('practice_sessions')
-      .select('duration_minutes, practice_date, rating')
+      .select('duration_minutes, practice_date')
 
     if (sessions) {
       const thisWeekMinutes = sessions
@@ -51,16 +49,10 @@ export default function Stats({ refreshTrigger }: StatsProps) {
         .filter(s => new Date(s.practice_date) >= startOfMonth)
         .reduce((sum, s) => sum + s.duration_minutes, 0)
 
-      const ratings = sessions.filter(s => s.rating).map(s => s.rating)
-      const avgRating = ratings.length > 0
-        ? ratings.reduce((a, b) => a + b, 0) / ratings.length
-        : null
-
       setStats({
         thisWeek: thisWeekMinutes,
         thisMonth: thisMonthMinutes,
         totalSessions: sessions.length,
-        averageRating: avgRating,
       })
     }
     setLoading(false)
@@ -75,11 +67,11 @@ export default function Stats({ refreshTrigger }: StatsProps) {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[...Array(4)].map((_, i) => (
+      <div className="grid grid-cols-3 gap-4">
+        {[...Array(3)].map((_, i) => (
           <div key={i} className="bg-white p-4 rounded-lg shadow animate-pulse">
-            <div className="h-4 bg-gray-200 rounded w-2/3 mb-2"></div>
-            <div className="h-8 bg-gray-200 rounded w-1/2"></div>
+            <div className="h-4 bg-secondary rounded w-2/3 mb-2"></div>
+            <div className="h-8 bg-secondary rounded w-1/2"></div>
           </div>
         ))}
       </div>
@@ -87,7 +79,7 @@ export default function Stats({ refreshTrigger }: StatsProps) {
   }
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="grid grid-cols-3 gap-4">
       <div className="bg-white p-4 rounded-lg shadow">
         <p className="text-sm text-accent">This Week</p>
         <p className="text-2xl font-bold text-primary">{formatTime(stats.thisWeek)}</p>
@@ -99,12 +91,6 @@ export default function Stats({ refreshTrigger }: StatsProps) {
       <div className="bg-white p-4 rounded-lg shadow">
         <p className="text-sm text-accent">Total Sessions</p>
         <p className="text-2xl font-bold text-primary">{stats.totalSessions}</p>
-      </div>
-      <div className="bg-white p-4 rounded-lg shadow">
-        <p className="text-sm text-accent">Avg. Rating</p>
-        <p className="text-2xl font-bold text-primary">
-          {stats.averageRating ? stats.averageRating.toFixed(1) : '-'}
-        </p>
       </div>
     </div>
   )
