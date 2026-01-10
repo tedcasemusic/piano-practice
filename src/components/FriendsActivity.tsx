@@ -72,7 +72,9 @@ export default function FriendsActivity({ refreshTrigger }: { refreshTrigger?: n
     const activityMap: Record<string, Set<number>> = {}
 
     sessions?.forEach(session => {
-      const sessionDate = new Date(session.practice_date)
+      // Parse date as local time (YYYY-MM-DD from DB is interpreted as UTC by default)
+      const [year, month, day] = session.practice_date.split('-').map(Number)
+      const sessionDate = new Date(year, month - 1, day)
       // Calculate which day of our Thu-Wed week this is
       const dayDiff = Math.floor((sessionDate.getTime() - weekStart.getTime()) / (1000 * 60 * 60 * 24))
 
@@ -121,35 +123,37 @@ export default function FriendsActivity({ refreshTrigger }: { refreshTrigger?: n
         <h2 className="text-xl font-semibold text-heading">Your Friends in the Club</h2>
       </div>
 
-      <div className="p-6">
-        {/* Header row with days */}
-        <div className="grid grid-cols-8 gap-2 mb-3">
-          <div></div>
-          {DAYS.map(day => (
-            <div key={day} className="text-center text-xs font-medium text-accent">
-              {day}
-            </div>
-          ))}
-        </div>
-
-        {/* Friend rows */}
-        <div className="space-y-2">
-          {friends.map(friend => (
-            <div key={friend.id} className="grid grid-cols-8 gap-2 items-center">
-              <div className="text-sm text-heading truncate">
-                {friend.id === currentUserId ? `${friend.name} (you)` : friend.name}
+      <div className="p-6 overflow-x-auto">
+        <div className="min-w-[320px]">
+          {/* Header row with days */}
+          <div className="grid grid-cols-8 gap-2 mb-3">
+            <div></div>
+            {DAYS.map(day => (
+              <div key={day} className="text-center text-xs font-medium text-accent">
+                {day}
               </div>
-              {friend.practiceDays.map((practiced, i) => (
-                <div key={i} className="flex justify-center">
-                  {practiced ? (
-                    <span className="text-primary text-lg">★</span>
-                  ) : (
-                    <span className="text-secondary text-lg">☆</span>
-                  )}
+            ))}
+          </div>
+
+          {/* Friend rows */}
+          <div className="space-y-2">
+            {friends.map(friend => (
+              <div key={friend.id} className="grid grid-cols-8 gap-2 items-center">
+                <div className="text-sm text-heading truncate max-w-[80px]">
+                  {friend.id === currentUserId ? `${friend.name} (you)` : friend.name}
                 </div>
-              ))}
-            </div>
-          ))}
+                {friend.practiceDays.map((practiced, i) => (
+                  <div key={i} className="flex justify-center">
+                    {practiced ? (
+                      <span className="text-primary text-lg">★</span>
+                    ) : (
+                      <span className="text-secondary text-lg">☆</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
 
         {friends.length === 0 && (
