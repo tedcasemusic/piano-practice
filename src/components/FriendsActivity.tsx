@@ -126,7 +126,7 @@ export default function FriendsActivity({ refreshTrigger }: { refreshTrigger?: n
       <div className="p-6 overflow-x-auto">
         <div className="min-w-[320px]">
           {/* Header row with days */}
-          <div className="grid grid-cols-8 gap-2 mb-3">
+          <div className="grid grid-cols-[minmax(100px,1.5fr)_repeat(7,1fr)] gap-2 mb-3">
             <div></div>
             {DAYS.map(day => (
               <div key={day} className="text-center text-xs font-medium text-accent">
@@ -138,8 +138,8 @@ export default function FriendsActivity({ refreshTrigger }: { refreshTrigger?: n
           {/* Friend rows */}
           <div className="space-y-2">
             {friends.map(friend => (
-              <div key={friend.id} className="grid grid-cols-8 gap-2 items-center">
-                <div className="text-sm text-heading truncate max-w-[80px]">
+              <div key={friend.id} className="grid grid-cols-[minmax(100px,1.5fr)_repeat(7,1fr)] gap-2 items-center">
+                <div className="text-sm text-heading truncate">
                   {friend.id === currentUserId ? `${friend.name} (you)` : friend.name}
                 </div>
                 {friend.practiceDays.map((practiced, i) => (
