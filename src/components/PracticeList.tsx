@@ -26,9 +26,17 @@ export default function PracticeList({ refreshTrigger, onUpdate }: PracticeListP
 
   const fetchSessions = async () => {
     const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) {
+      setLoading(false)
+      return
+    }
+
     const { data, error } = await supabase
       .from('practice_sessions')
       .select('*')
+      .eq('user_id', user.id)
       .order('practice_date', { ascending: false })
       .limit(20)
 

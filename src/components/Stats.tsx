@@ -27,6 +27,12 @@ export default function Stats({ refreshTrigger }: StatsProps) {
 
   const fetchStats = async () => {
     const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) {
+      setLoading(false)
+      return
+    }
 
     const now = new Date()
     const startOfWeek = new Date(now)
@@ -35,10 +41,11 @@ export default function Stats({ refreshTrigger }: StatsProps) {
 
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
 
-    // Get all sessions for calculations
+    // Get current user's sessions for calculations
     const { data: sessions } = await supabase
       .from('practice_sessions')
       .select('duration_minutes, practice_date')
+      .eq('user_id', user.id)
 
     if (sessions) {
       const thisWeekMinutes = sessions
