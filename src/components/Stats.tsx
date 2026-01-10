@@ -48,12 +48,18 @@ export default function Stats({ refreshTrigger }: StatsProps) {
       .eq('user_id', user.id)
 
     if (sessions) {
+      // Helper to parse date string as local time
+      const parseLocalDate = (dateStr: string) => {
+        const [year, month, day] = dateStr.split('-').map(Number)
+        return new Date(year, month - 1, day)
+      }
+
       const thisWeekMinutes = sessions
-        .filter(s => new Date(s.practice_date) >= startOfWeek)
+        .filter(s => parseLocalDate(s.practice_date) >= startOfWeek)
         .reduce((sum, s) => sum + s.duration_minutes, 0)
 
       const thisMonthMinutes = sessions
-        .filter(s => new Date(s.practice_date) >= startOfMonth)
+        .filter(s => parseLocalDate(s.practice_date) >= startOfMonth)
         .reduce((sum, s) => sum + s.duration_minutes, 0)
 
       setStats({
