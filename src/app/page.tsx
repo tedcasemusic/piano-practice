@@ -81,7 +81,7 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 gap-8">
             <PracticeForm onSuccess={handlePracticeLogged} />
-            <PracticeList refreshTrigger={refreshTrigger} />
+            <PracticeList refreshTrigger={refreshTrigger} onUpdate={handlePracticeLogged} />
           </div>
 
           <FriendsActivity refreshTrigger={refreshTrigger} />
