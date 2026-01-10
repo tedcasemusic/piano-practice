@@ -104,7 +104,7 @@ export default function PracticeForm({ onSuccess }: PracticeFormProps) {
             type="date"
             value={formData.practice_date}
             onChange={e => setFormData(prev => ({ ...prev, practice_date: e.target.value }))}
-            className="w-full px-3 py-2 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full box-border appearance-none px-3 py-2 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             required
           />
         </div>
