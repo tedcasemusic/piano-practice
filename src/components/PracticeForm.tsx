@@ -97,7 +97,7 @@ export default function PracticeForm({ onSuccess }: PracticeFormProps) {
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
+          <div className="overflow-hidden">
             <label className="block text-sm font-medium text-accent mb-1">
               Date
             </label>
@@ -105,7 +105,7 @@ export default function PracticeForm({ onSuccess }: PracticeFormProps) {
               type="date"
               value={formData.practice_date}
               onChange={e => setFormData(prev => ({ ...prev, practice_date: e.target.value }))}
-              className="w-full max-w-full px-3 py-2 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-3 py-2 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
               required
             />
           </div>
