@@ -143,7 +143,7 @@ export default function PracticeList({ refreshTrigger, onUpdate }: PracticeListP
 
   return (
     <>
-      <div className="bg-white rounded-lg shadow overflow-hidden flex flex-col h-full">
+      <div className="bg-white rounded-lg shadow overflow-hidden flex flex-col max-h-96">
         <div className="px-6 py-4 border-b border-secondary shrink-0">
           <h2 className="text-xl font-semibold text-heading">Recent Practice</h2>
         </div>

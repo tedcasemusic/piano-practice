@@ -81,7 +81,7 @@ export default function Home() {
         <div className="space-y-8">
           <Stats refreshTrigger={refreshTrigger} />
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 items-start">
             <PracticeForm onSuccess={handlePracticeLogged} />
             <PracticeList refreshTrigger={refreshTrigger} onUpdate={handlePracticeLogged} />
           </div>
