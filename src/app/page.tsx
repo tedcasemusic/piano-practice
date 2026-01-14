@@ -91,7 +91,7 @@ export default function Home() {
             onUserPracticeDaysChange={setUserPracticeDays}
           />
 
-          <PerfectWeekStar practiceDays={userPracticeDays} />
+          <PerfectWeekStar practiceDays={userPracticeDays} refreshTrigger={refreshTrigger} />
         </div>
       </div>
     </main>
