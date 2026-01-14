@@ -7,12 +7,14 @@ import PracticeForm from '@/components/PracticeForm'
 import PracticeList from '@/components/PracticeList'
 import Stats from '@/components/Stats'
 import FriendsActivity from '@/components/FriendsActivity'
+import PerfectWeekStar from '@/components/PerfectWeekStar'
 import type { User } from '@supabase/supabase-js'
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [refreshTrigger, setRefreshTrigger] = useState(0)
+  const [userPracticeDays, setUserPracticeDays] = useState<boolean[]>(Array(7).fill(false))
 
   useEffect(() => {
     const supabase = createClient()
@@ -84,7 +86,12 @@ export default function Home() {
             <PracticeList refreshTrigger={refreshTrigger} onUpdate={handlePracticeLogged} />
           </div>
 
-          <FriendsActivity refreshTrigger={refreshTrigger} />
+          <FriendsActivity
+            refreshTrigger={refreshTrigger}
+            onUserPracticeDaysChange={setUserPracticeDays}
+          />
+
+          <PerfectWeekStar practiceDays={userPracticeDays} />
         </div>
       </div>
     </main>

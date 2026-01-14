@@ -12,7 +12,12 @@ interface FriendActivity {
 // Days of week starting Thursday
 const DAYS = ['Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed']
 
-export default function FriendsActivity({ refreshTrigger }: { refreshTrigger?: number }) {
+interface FriendsActivityProps {
+  refreshTrigger?: number
+  onUserPracticeDaysChange?: (days: boolean[]) => void
+}
+
+export default function FriendsActivity({ refreshTrigger, onUserPracticeDaysChange }: FriendsActivityProps) {
   const [friends, setFriends] = useState<FriendActivity[]>([])
   const [loading, setLoading] = useState(true)
   const [currentUserId, setCurrentUserId] = useState<string | null>(null)
@@ -104,6 +109,16 @@ export default function FriendsActivity({ refreshTrigger }: { refreshTrigger?: n
 
     setFriends(friendsList)
     setLoading(false)
+
+    // Pass current user's practice days to parent
+    if (user && onUserPracticeDaysChange) {
+      const currentUserData = friendsList.find(f => f.id === user.id)
+      if (currentUserData) {
+        onUserPracticeDaysChange(currentUserData.practiceDays)
+      } else {
+        onUserPracticeDaysChange(Array(7).fill(false))
+      }
+    }
   }
 
   if (loading) {

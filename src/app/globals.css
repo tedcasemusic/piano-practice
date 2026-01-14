@@ -9,6 +9,9 @@
   --accent: #365b6d;
   --heading: #223a44;
   --dark: #0e171b;
+  --gold-dark: #b8860b;
+  --gold: #ffd700;
+  --gold-light: #ffec8b;
 }
 
 @theme inline {
@@ -20,8 +23,35 @@
   --color-accent: var(--accent);
   --color-heading: var(--heading);
   --color-dark: var(--dark);
+  --color-gold-dark: var(--gold-dark);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+@keyframes star-fill {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.15);
+    filter: brightness(1.2);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes star-shimmer {
+  0%, 100% {
+    filter: brightness(1) drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+  }
+  50% {
+    filter: brightness(1.1) drop-shadow(0 0 16px rgba(255, 215, 0, 0.9));
+  }
 }
 
 body {
