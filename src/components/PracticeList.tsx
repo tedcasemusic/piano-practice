@@ -143,11 +143,11 @@ export default function PracticeList({ refreshTrigger, onUpdate }: PracticeListP
 
   return (
     <>
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="px-6 py-4 border-b border-secondary">
+      <div className="bg-white rounded-lg shadow overflow-hidden flex flex-col h-full">
+        <div className="px-6 py-4 border-b border-secondary shrink-0">
           <h2 className="text-xl font-semibold text-heading">Recent Practice</h2>
         </div>
-        <div className="max-h-80 overflow-y-auto">
+        <div className="overflow-y-auto flex-1 min-h-0">
           <ul className="divide-y divide-secondary">
           {sessions.map(session => (
             <li
