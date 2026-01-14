@@ -147,7 +147,8 @@ export default function PracticeList({ refreshTrigger, onUpdate }: PracticeListP
         <div className="px-6 py-4 border-b border-secondary">
           <h2 className="text-xl font-semibold text-heading">Recent Practice</h2>
         </div>
-        <ul className="divide-y divide-secondary">
+        <div className="max-h-80 overflow-y-auto">
+          <ul className="divide-y divide-secondary">
           {sessions.map(session => (
             <li
               key={session.id}
@@ -167,7 +168,8 @@ export default function PracticeList({ refreshTrigger, onUpdate }: PracticeListP
               )}
             </li>
           ))}
-        </ul>
+          </ul>
+        </div>
       </div>
 
       {/* Edit Modal */}
