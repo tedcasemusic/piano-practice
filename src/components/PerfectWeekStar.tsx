@@ -138,26 +138,35 @@ export default function PerfectWeekStar({ practiceDays, refreshTrigger }: Perfec
     setLoading(false)
   }
 
-  // Calculate sizes and opacities for past weeks (fading to the left)
-  const getStarStyle = (index: number, total: number) => {
-    // Index 0 is oldest (leftmost), fades most
-    // Higher index = more recent = less faded
-    const fadeLevel = (total - index) / total
-    const opacity = 0.3 + (0.7 * (index + 1) / total) // Range from ~0.3 to 1.0
-    const size = 50 + (20 * (index + 1) / total) // Range from ~50 to 70px
+  // Number of future weeks to show (same as past for symmetry)
+  const futureWeeksCount = 4
+
+  // Calculate sizes and opacities for weeks based on distance from current
+  const getStarStyle = (distanceFromCurrent: number) => {
+    // distanceFromCurrent: 0 = current week, positive = further away
+    if (distanceFromCurrent === 0) {
+      return { opacity: 1, size: 120 }
+    }
+    // Further away = smaller and more faded
+    const maxDistance = 4
+    const normalizedDistance = Math.min(distanceFromCurrent, maxDistance)
+    const opacity = 1 - (normalizedDistance * 0.175) // 1.0 -> 0.3 over 4 steps
+    const size = 120 - (normalizedDistance * 17.5) // 120 -> 50 over 4 steps
     return { opacity, size: Math.round(size) }
   }
 
   return (
     <div className="bg-white p-6 rounded-lg shadow">
       <div className="flex flex-col items-center">
-        {/* Stars row */}
-        <div className="flex items-end justify-center gap-2">
-          {/* Past weeks - smaller and fading */}
+        {/* Stars row - horizontally centered with current week in middle */}
+        <div className="flex items-center justify-center gap-2">
+          {/* Past weeks - fading to the left */}
           {!loading && pastWeeks.map((week, index) => {
-            const { opacity, size } = getStarStyle(index, pastWeeks.length)
+            // Distance from current: pastWeeks[0] is oldest (furthest), pastWeeks[length-1] is most recent (closest)
+            const distanceFromCurrent = pastWeeks.length - index
+            const { opacity, size } = getStarStyle(distanceFromCurrent)
             return (
-              <div key={week.weekStart.toISOString()} className="flex flex-col items-center">
+              <div key={week.weekStart.toISOString()} className="flex items-center justify-center">
                 <Star
                   size={size}
                   filled={week.isPerfect}
@@ -168,8 +177,8 @@ export default function PerfectWeekStar({ practiceDays, refreshTrigger }: Perfec
             )
           })}
 
-          {/* Current week - largest and most prominent */}
-          <div className="flex flex-col items-center">
+          {/* Current week - largest and centered */}
+          <div className="flex items-center justify-center">
             <Star
               size={120}
               filled={isPerfectWeek}
@@ -177,6 +186,22 @@ export default function PerfectWeekStar({ practiceDays, refreshTrigger }: Perfec
               id="current"
             />
           </div>
+
+          {/* Future weeks - fading to the right (always empty) */}
+          {!loading && Array.from({ length: futureWeeksCount }).map((_, index) => {
+            const distanceFromCurrent = index + 1
+            const { opacity, size } = getStarStyle(distanceFromCurrent)
+            return (
+              <div key={`future-${index}`} className="flex items-center justify-center">
+                <Star
+                  size={size}
+                  filled={false}
+                  opacity={opacity}
+                  id={`future-${index}`}
+                />
+              </div>
+            )
+          })}
         </div>
 
         <h3 className="mt-4 text-lg font-semibold text-heading">
